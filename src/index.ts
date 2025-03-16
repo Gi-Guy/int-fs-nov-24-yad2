@@ -16,7 +16,7 @@ type Listing = {
     price: number,
 };
 
-const listings: Listing[] = [];
+let listings: Listing[] = [];
 
 const server = createServer((req, res) => {
     console.log(req.method, req.url);
@@ -36,6 +36,16 @@ const server = createServer((req, res) => {
         });
 
         res.writeHead(201);
+    } else if (req.method === "DELETE" && req.url?.startsWith("/listings")) {
+        const [,, ...idParts] = req.url.split("/");
+        const id = idParts.join("/");
+
+        if (!listings.some((listing) => listing.id === id)) {
+            res.writeHead(404);
+        } else {
+            listings = listings.filter((listing) => listing.id !== id);
+            res.writeHead(201);
+        }
     } else {
         res.writeHead(404);
     }
