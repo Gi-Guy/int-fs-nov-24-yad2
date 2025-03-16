@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { createServer } from "http";
 import express from "express";
+import { json } from "body-parser";
 
 // UI - User Interface
 // API - Application Programming Interface
@@ -21,13 +22,27 @@ let listings: Listing[] = [];
 
 const app = express();
 
-app.get("/listings", (_, res) => {
-    res.json(listings.map((listing) => {
-        return {
-            id: listing.id,
-            title: listing.title,
-        };
-    }));
+app.use((req, _, next) => {
+    console.log(new Date(), req.method, req.url);
+    next();
+});
+
+app.use(json());
+
+app.get("/listings", (req, res) => {
+    const { search } = req.query;
+    const result = listings
+        .filter(({ title, description }) =>
+            typeof search !== "string" ||
+            title.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+            description && description.toLowerCase().indexOf(search.toLowerCase()) > -1
+        )
+        .map(({ id, title }) => ({
+            id,
+            title,
+        }));
+
+    res.json(result);
 });
 
 app.get("/listings/:id", (req, res) => {
@@ -43,12 +58,12 @@ app.get("/listings/:id", (req, res) => {
     res.json(listing);
 });
 
-app.put("/listings", (_, res) => {
-    // get body
+app.put("/listings/:id", (req, res) => {
+    console.log(req.body);
     listings.push({
         id: randomUUID(),
         createdAt: Date.now(),
-        title: "Test listing",
+        title: `Test listing #${listings.length + 1}`,
         price: 500,
     });
 
