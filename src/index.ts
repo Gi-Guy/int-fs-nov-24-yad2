@@ -1,5 +1,6 @@
 import { randomUUID } from "crypto";
 import { createServer } from "http";
+import express from "express";
 
 // UI - User Interface
 // API - Application Programming Interface
@@ -18,39 +19,39 @@ type Listing = {
 
 let listings: Listing[] = [];
 
-const server = createServer((req, res) => {
-    console.log(req.method, req.url);
+const app = express();
 
-    if (req.method === "GET" && req.url === "/listings") {
-        res.writeHead(200, {
-            "content-type": "application/json"
-        });
-        res.write(JSON.stringify(listings));
-    } else if (req.method === "PUT" && req.url === "/listings") {
-        // get body
-        listings.push({
-            id: randomUUID(),
-            createdAt: Date.now(),
-            title: "Test listing",
-            price: 500,
-        });
+app.get("/listings", (_, res) => {
+    res.json(listings);
+});
 
-        res.writeHead(201);
-    } else if (req.method === "DELETE" && req.url?.startsWith("/listings")) {
-        const [,, ...idParts] = req.url.split("/");
-        const id = idParts.join("/");
+app.put("/listings", (_, res) => {
+    // get body
+    listings.push({
+        id: randomUUID(),
+        createdAt: Date.now(),
+        title: "Test listing",
+        price: 500,
+    });
 
-        if (!listings.some((listing) => listing.id === id)) {
-            res.writeHead(404);
-        } else {
-            listings = listings.filter((listing) => listing.id !== id);
-            res.writeHead(201);
-        }
-    } else {
-        res.writeHead(404);
-    }
-
+    res.status(201);
     res.end();
 });
+
+app.delete("/listings/:id", (req, res) => {
+    const id = req.params.id;
+
+    if (!listings.some((listing) => listing.id === id)) {
+        res.status(404);
+        res.end();
+        return;
+    }
+
+    listings = listings.filter((listing) => listing.id !== id);
+    res.status(204);
+    res.end();
+});
+
+const server = createServer(app);
 
 server.listen(8090, () => console.log("Server listening on port 8090"));
