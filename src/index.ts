@@ -22,7 +22,25 @@ let listings: Listing[] = [];
 const app = express();
 
 app.get("/listings", (_, res) => {
-    res.json(listings);
+    res.json(listings.map((listing) => {
+        return {
+            id: listing.id,
+            title: listing.title,
+        };
+    }));
+});
+
+app.get("/listings/:id", (req, res) => {
+    const { id } = req.params;
+    const listing = listings.find((l) => l.id === id);
+
+    if (!listing) {
+        res.status(404);
+        res.end();
+        return;
+    }
+
+    res.json(listing);
 });
 
 app.put("/listings", (_, res) => {
