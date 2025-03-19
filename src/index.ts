@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { createServer } from "http";
 import express from "express";
 import { json } from "body-parser";
@@ -19,6 +18,16 @@ type Listing = {
 };
 
 let listings: Listing[] = [];
+
+type Message = {
+    id: string,
+    createdAt: number,
+    from: string,
+    to: string,
+    content: string,
+};
+
+let messages: Message[] = [];
 
 const app = express();
 
