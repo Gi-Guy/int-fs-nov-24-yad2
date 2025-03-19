@@ -1,8 +1,8 @@
 import { createServer } from "http";
 import express from "express";
 import { json } from "body-parser";
-import { router as listingsRouter } from "./listings.controller";
-import * as messagesController from "./messages";
+import { router as listingsRouter } from "./listings.router";
+import { router as usersRouter } from "./users.router";
 
 const app = express();
 
@@ -14,10 +14,7 @@ app.use((req, _, next) => {
 app.use(json());
 
 app.use("/listings", listingsRouter);
-
-app.post("/users/:userId/messages", messagesController.create);
-
-app.get("/users/:userId/messages", messagesController.list);
+app.use("/users", usersRouter);
 
 const server = createServer(app);
 
