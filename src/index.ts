@@ -58,14 +58,24 @@ app.get("/listings/:id", (req, res) => {
     res.json(listing);
 });
 
+type UpdateListingBody = Omit<Listing, "id" | "createdAt">;
+
 app.put("/listings/:id", (req, res) => {
-    console.log(req.body);
-    listings.push({
-        id: randomUUID(),
-        createdAt: Date.now(),
-        title: `Test listing #${listings.length + 1}`,
-        price: 500,
-    });
+    const body = req.body as UpdateListingBody;
+    const { id } = req.params;
+    const existingListing = listings.find((listing) => listing.id === id);
+
+    if (existingListing) {
+        existingListing.title = body.title;
+        existingListing.description = body.description;
+        existingListing.price = body.price;
+    } else {
+        listings.push({
+            id,
+            createdAt: Date.now(),
+            ...body
+        });
+    }
 
     res.status(201);
     res.end();
