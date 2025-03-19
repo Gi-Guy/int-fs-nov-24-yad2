@@ -1,7 +1,8 @@
 import { createServer } from "http";
 import express from "express";
 import { json, urlencoded } from "body-parser";
-import { listings, router as listingsRouter } from "./listings.router";
+import * as listingsModel from "./listings.model";
+import { router as listingsRouter } from "./listings.router";
 import { router as usersRouter } from "./users.router";
 import { randomUUID } from "crypto";
 
@@ -25,7 +26,7 @@ app.get("/", (_, res) => {
             <h1>Listings</h1>
             <a href="/create-listing">New listing</a>
             <ul>
-                ${listings.map((listing) => `<li>${listing.title}</li>`).join("\n")}
+                ${listingsModel.get().map((listing) => `<li>${listing.title}</li>`).join("\n")}
             </ul>
         </body>
 </html>`);
@@ -60,7 +61,7 @@ app.get("/create-listing", (req, res) => {
 </html>`);
 });
 
-app.post("/create-listing", (req, res) => {
+app.post("/create-listing", async (req, res) => {
     const { title, price, description } = req.body;
 
     if (!title) {
@@ -68,9 +69,7 @@ app.post("/create-listing", (req, res) => {
         return;
     }
 
-    listings.push({
-        id: randomUUID(),
-        createdAt: Date.now(),
+    await listingsModel.createOrUpdate(randomUUID(), {
         title,
         price: Number(price),
         description
