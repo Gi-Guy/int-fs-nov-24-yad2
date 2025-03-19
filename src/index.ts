@@ -1,7 +1,7 @@
 import { createServer } from "http";
 import express from "express";
 import { json } from "body-parser";
-import * as listingsController from "./listings";
+import { router as listingsRouter } from "./listings.controller";
 import * as messagesController from "./messages";
 
 const app = express();
@@ -13,17 +13,11 @@ app.use((req, _, next) => {
 
 app.use(json());
 
-listingsController.use(app);
+app.use("/listings", listingsRouter);
 
 app.post("/users/:userId/messages", messagesController.create);
 
-app.get("/users/:userId/messages", (req, res) => {
-    const { userId } = req.params;
-
-    res.json(
-        messages.filter((message) => message.to === userId),
-    );
-});
+app.get("/users/:userId/messages", messagesController.list);
 
 const server = createServer(app);
 

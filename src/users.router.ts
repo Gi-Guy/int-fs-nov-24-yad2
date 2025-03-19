@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { Handler } from "express";
+import express from "express";
 
 type Message = {
     id: string,
@@ -11,7 +11,9 @@ type Message = {
 
 let messages: Message[] = [];
 
-export const create: Handler = (req, res) => {
+export const router = express.Router();
+
+router.post("/:userId/messages", (req, res) => {
     const { userId } = req.params;
 
     messages.push({
@@ -24,12 +26,12 @@ export const create: Handler = (req, res) => {
     
     res.status(204);
     res.end();
-};
+});
 
-export const list: Handler = (req, res) => {
+router.get("/:userId/messages", (req, res) => {
     const { userId } = req.params;
     
     res.json(
         messages.filter((message) => message.to === userId),
     );
-};
+});
