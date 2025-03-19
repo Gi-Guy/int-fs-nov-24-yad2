@@ -1,7 +1,6 @@
 import { createServer } from "http";
 import express from "express";
 import { json } from "body-parser";
-import { randomUUID } from "crypto";
 
 // UI - User Interface
 // API - Application Programming Interface
@@ -103,29 +102,6 @@ app.delete("/listings/:id", (req, res) => {
     listings = listings.filter((listing) => listing.id !== id);
     res.status(204);
     res.end();
-});
-
-app.post("/users/:userId/messages", (req, res) => {
-    const { userId } = req.params;
-
-    messages.push({
-        id: randomUUID(),
-        createdAt: Date.now(),
-        from: "currentUser",
-        to: userId,
-        content: req.body.content,
-    });
-    
-    res.status(204);
-    res.end();
-});
-
-app.get("/users/:userId/messages", (req, res) => {
-    const { userId } = req.params;
-
-    res.json(
-        messages.filter((message) => message.to === userId),
-    );
 });
 
 const server = createServer(app);
