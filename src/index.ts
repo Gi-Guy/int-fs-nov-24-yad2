@@ -78,6 +78,14 @@ app.post("/create-listing", async (req, res) => {
     res.redirect("/");
 });
 
+// /api/....
+// /api/listings/aaaa
+
+// / - public/index.html
+// /app.js
+// /styles.css
+// /listings
+
 app.use("/listings", listingsRouter);
 app.use("/users", usersRouter);
 
