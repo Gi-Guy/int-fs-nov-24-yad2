@@ -13,6 +13,14 @@ app.use((req, _, next) => {
 
 app.use(json());
 
+// /api/....
+// /api/listings/aaaa
+
+// / - public/index.html
+// /app.js
+// /styles.css
+// /listings
+
 app.use("/listings", listingsRouter);
 app.use("/users", usersRouter);
 
