@@ -1,5 +1,5 @@
 import express from "express";
-import * as model from "./listings.model";
+import * as model from "../listings.model";
 
 export const router = express.Router();
 
