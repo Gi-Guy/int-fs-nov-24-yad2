@@ -8,23 +8,32 @@
 </head>
 <body>
     <h1>Listings</h1>
-    <a href="#">Create listing</a>
+    <a href="/create-listing">Create listing</a>
     <form>
         <label for="search">Search</label>
         <input id="search" type="search" name="search" />
         <button>Search</button>
     </form>
-    <pre id="listings-raw"></pre>
     <ul id="listings"></ul>
     <script>
-        fetch("/api/listings")
-            .then((res) => res.json())
-            .then((data) => {
-                window["listings-raw"].textContent = JSON.stringify(data, null, 2);
-                console.log(data);
-            });
+        // fetch("/api/listings")
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //         listings.innerHTML = data
+        //             .map((listing) => `<li><a href="/listing#${listing.id}">${listing.title}</a></li>`)
+        //             .join("\n");
+        //     });
 
-        console.log("Loading...");
+        async function app() {
+            const res = await fetch("/api/listings");
+            const data = await res.json();
+
+            listings.innerHTML = data
+                .map((listing) => `<li><a href="/listing#${listing.id}">${listing.title}</a></li>`)
+                .join("\n");
+        }
+
+        app();
     </script>
 </body>
 </html>
