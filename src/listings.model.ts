@@ -14,7 +14,6 @@ const dataPath = path.join(__dirname, "..", "data", "listings.json");
 
 let listings: Listing[] = load();
 
-
 function load() {
     try {
         const raw = readFileSync(dataPath, "utf8");

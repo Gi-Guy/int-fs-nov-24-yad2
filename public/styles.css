@@ -14,3 +14,13 @@ html {
 body {
     font-family: system-ui;
 }
+
+input, textarea, button {
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+}
+
+textarea {
+    resize: none;
+}

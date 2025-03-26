@@ -16,14 +16,6 @@
     </form>
     <ul id="listings"></ul>
     <script>
-        // fetch("/api/listings")
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         listings.innerHTML = data
-        //             .map((listing) => `<li><a href="/listing#${listing.id}">${listing.title}</a></li>`)
-        //             .join("\n");
-        //     });
-
         async function app() {
             const res = await fetch("/api/listings");
             const data = await res.json();
