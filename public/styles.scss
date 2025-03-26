@@ -24,3 +24,37 @@ input, textarea, button {
 textarea {
     resize: none;
 }
+
+main {
+    width: min(70ch, 100% - 2rem);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+nav {
+    padding: 1rem;
+
+    & > menu {
+        display: flex;
+        list-style: none;
+        gap: 1rem;
+        padding: 0;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+
+        & > label {
+            font-size: 0.8rem;
+        }
+    }
+}

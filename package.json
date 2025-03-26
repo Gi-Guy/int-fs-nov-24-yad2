@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.10",
     "tsx": "^4.19.3",
@@ -21,6 +22,7 @@
   },
   "dependencies": {
     "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.2"
   }
 }

@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yad2 - Listings</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-    <h1>Listings</h1>
-    <a href="/create-listing">Create listing</a>
-    <form>
-        <label for="search">Search</label>
-        <input id="search" type="search" name="search" />
-        <button>Search</button>
-    </form>
-    <ul id="listings"></ul>
+    <nav>
+        <menu>
+            <li><a href="/create-listing">Create listing</a></li>
+            <li><a href="/login">Login</a></li>
+        </menu>
+    </nav>
+    <main>
+        <h1>Listings</h1>
+        <form>
+            <label for="search">Search</label>
+            <input id="search" type="search" name="search" />
+            <button>Search</button>
+        </form>
+        <ul id="listings"></ul>
+    </main>
+
     <script type="module">
         import { app } from "./index.js";
 
         app(listings);
     </script>
 </body>
+
 </html>

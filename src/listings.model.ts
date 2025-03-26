@@ -5,6 +5,7 @@ import { writeFile } from "fs/promises";
 type Listing = {
     id: string,
     createdAt: number,
+    userId: string,
     title: string,
     description?: string,
     price: number,
