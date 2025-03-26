@@ -10,13 +10,13 @@ form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-}
 
-form > div {
-    display: flex;
-    flex-direction: column;
-}
+    & > div {
+        display: flex;
+        flex-direction: column;
 
-form > div > label {
-    font-size: 0.8rem;
+        & > label {
+            font-size: 0.8rem;
+        }
+    }
 }

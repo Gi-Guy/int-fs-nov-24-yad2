@@ -136,3 +136,9 @@ dist
 .pnp.*
 
 data/
+
+*.js
+*.js.map
+
+*.css
+*.css.map
