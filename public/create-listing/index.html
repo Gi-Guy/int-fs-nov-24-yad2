@@ -32,34 +32,7 @@
         </form>
     </main>
 
-    <script>
-        document.forms.namedItem("create listing").addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(e.target, e.submitter);
-            const rawListing = Object.fromEntries(formData);
-            const listing = {
-                ...rawListing,
-                price: Number(rawListing.price),
-                description: rawListing.description || undefined
-            };
-            const body = JSON.stringify(listing);
-
-            e.target
-                .querySelectorAll("input, textarea, button")
-                .forEach((element) => element.disabled = true);
-
-            await fetch(`/api/listings/${crypto.randomUUID()}`, {
-                method: "put",
-                body,
-                headers: {
-                    "content-type": "application/json"
-                }
-            });
-
-            window.location.replace("/");
-        });
-    </script>
+    <script src="index.js"></script>
 </body>
 
 </html>
