@@ -3,6 +3,7 @@ import express from "express";
 import { json } from "body-parser";
 import cookieParser from "cookie-parser";
 import { router as apiRouter } from "./routers/api";
+import { User } from "./models/users.model";
 
 export const app = express();
 
@@ -42,6 +43,35 @@ app.post("/login", (req, res) => {
     });
 
     res.end();
+});
+
+app.post("/register", async (req, res) => {
+    try {
+        const { email, password, name } = req.body;
+
+        const createdUser = await User.create({
+            email,
+            password,
+            name,
+        });
+
+        const expires = new Date();
+        expires.setDate(expires.getDate() + 1);
+
+        res.cookie("userId", createdUser._id, {
+            expires,
+            signed: true,
+            httpOnly: true,
+        });
+
+        res.status(201);
+        res.end();
+    } catch (error) {
+        console.error(error);
+
+        res.status(500);
+        res.send("Oops, something went wrong");
+    }
 });
 
 app.use("/api", apiRouter);

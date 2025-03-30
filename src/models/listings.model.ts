@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 
 const schema = new Schema({
     title: {
@@ -9,6 +9,11 @@ const schema = new Schema({
     price: {
         type: Number,
         required: true,
+    },
+    user: {
+        type: Types.ObjectId,
+        ref: "User",
+        requried: true,
     },
 }, { timestamps: true });
 
