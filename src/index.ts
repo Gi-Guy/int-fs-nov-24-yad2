@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import { createServer } from "http";
 import path from "path";
 import express from "express";
@@ -39,6 +41,7 @@ app.post("/login", (req, res) => {
     res.cookie("userId", "f163bb29-6794-4e0d-9619-e2706a128d0b", {
         expires,
         signed: true,
+        httpOnly: true,
     });
 
     res.end();

@@ -1,0 +1,7 @@
+1. Make sure listings are created on the current user
+2. Create a registration page and save users to a file
+3. Authenticate users in the login with the users from the file
+4. Pages should have login and register link only when user is not logged in
+5. Pages should say "Hello, <username>" when user is logged in
+6. Allow users to logout (only when logged in)
+7. Show error message in login page when email/password doesn't match
